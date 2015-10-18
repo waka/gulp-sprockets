@@ -1,0 +1,11 @@
+.main {
+  background-color: #fff;
+
+  a.button {
+    background-color: #000;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
