@@ -1,11 +1,11 @@
 /**
- * @fileoverview JavaScript stream.
+ * @fileoverview CSS stream.
  */
 
 import assign    from 'object-assign';
 import stream    from 'event-stream';
-import builder   from '../builders/js';
-import directive from '../directives/js';
+import builder   from '../builders/scss';
+import directive from '../directives/css';
 import { transformation } from '../transformer';
 
 function defaultOptions() {

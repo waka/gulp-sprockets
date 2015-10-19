@@ -1,11 +1,10 @@
 /**
- * @fileoverview JavaScript stream.
+ * @fileoverview SCSS stream.
  */
 
 import assign    from 'object-assign';
 import stream    from 'event-stream';
-import builder   from '../builders/js';
-import directive from '../directives/js';
+import builder   from '../builders/scss';
 import { transformation } from '../transformer';
 
 function defaultOptions() {
@@ -19,8 +18,7 @@ export default function (options) {
   options = assign(defaultOptions(), options);
 
   return stream.through(function(vFile) {
-    vFile = transformation(
-        [builder, directive], vFile, options);
+    vFile = builder.transform(vFile, options);
     this.emit('data', vFile);
   });
 }

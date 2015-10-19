@@ -1,6 +1,19 @@
-import js       from './streams/js';
-import sass     from './streams/sass';
-import image    from './streams/image';
-import manifest from './streams/manifest';
+import css        from './streams/css';
+import js         from './streams/js';
+import precompile from './streams/precompile';
+import scss       from './streams/scss';
+import assets     from './assets';
+import manifest   from './manifest';
 
-export default {js, sass, image, manifest};
+let sprockets = { css, js, precompile, scss };
+
+/**
+ * @param {Array.<String>} assetPaths .
+ * @param {String} manifestPath .
+ */
+sprockets.declare = function(assetPaths, manifestPath) {
+  assets.init(assetPaths);
+  manifest.init(manifestPath);
+};
+
+export default sprockets;

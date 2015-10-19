@@ -1,11 +1,11 @@
-# Nrockets
+# gulp-sprockets
 
-Alt sprockets for nodejs.
+Sprockets for nodejs.
 
 ## Installation
 
 ```
-npm install nrockets
+npm install gulp-sprockets
 ```
 
 ## Usage
@@ -13,31 +13,63 @@ npm install nrockets
 Gulpfile
 
 ```
-import nrockets from 'nrockets';
+import gulp from 'gulp';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import runSequence from 'run-sequence';
 
-gulp.task('js', () => {
-  gulp.src('app/assets/javascripts/**/*.js')
-    .pipe(nrockets.js())
-    .pipe(babel())
-    .pipe(gulp.dest('public/assets/'))
+const $ = gulpLoadPlugins({ lazy: false });
+const destPath = "./public/assets"
+
+// initialize manifest!
+$.sprockets.declare(destPath);
+
+gulp.task('build:image', () => {
+  return gulp.src(['app/assets/images/**/*.png'])
+    .pipe($.sprockets.image())
+    .pipe(gulp.dest(destPath))
 });
 
-gulp.task('css', () => {
-  gulp.src('app/assets/stylesheets/**/*.scss')
-    .pipe(nrockets.css())
-    .pipe(sass())
-    .pipe(gulp.dest('public/assets/'))
+gulp.task('build:js', () => {
+  return gulp.src('app/assets/javascripts/*.js')
+    .pipe($.sprockets.js())
+    .pipe($.babel())
+    .pipe(gulp.dest(destPath))
 });
 
-gulp.task('build:before', () => {
-  nrockets.manifest()
+gulp.task('build:css', () => {
+  return gulp.src('app/assets/stylesheets/*.scss')
+    .pipe($.cached('css'))
+    .pipe($.sprockets.sass())
+    .pipe(gulp.dest(destpath))
 });
-gulp.task('build', ['js', 'css']);
+
+gulp.task('default', () => {
+  runSequence(
+      'clean',
+      'build:image',
+      ['build:css', 'build:js']
+  );
+})
+
+```
+
+package.json
+
+```
+{
+  "scripts": {
+    "build": "gulp"
+  },
+  ...
+}
+```
+
+And then do build command.
+
+```
+$ npm run build
 ```
 
 ## Todo
 
-- generate file hash
-- create manifest.json
-- emulate assets function (`image-url()`)
-- cache system
+- recognize sprockets directives, and translate

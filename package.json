@@ -1,23 +1,34 @@
 {
   "name": "gulp-sprockets",
   "version": "0.1.0",
-  "description": "alt sprockets by nodejs",
+  "description": "another sprockets by nodejs",
   "repository": "git://github.com/waka/gulp-sprockets",
   "main": "./index.js",
   "scripts": {
-    "build": "gulp build",
+    "build": "gulp",
     "watch": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "babel-core": "^5.4.7",
-    "event-stream": "^3.3.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.0",
     "gulp-load-plugins": "^0.10.0",
-    "gulp-uglify": "^1.0.1",
+    "gulp-uglify": "^1.0.1"
+  },
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "event-stream": "^3.3.1",
+    "escodegen": "^1.7.0",
+    "esprima": "^2.7.0",
+    "estraverse": "^4.1.1",
+    "fs-extra": "^0.24.0",
+    "lodash": "^3.10.1",
     "node-sass": "^3.3.3",
-    "vinyl": "^1.0.0"
+    "object-assign": "^4.0.1",
+    "postcss": "^5.0.10",
+    "vinyl": "^1.0.0",
+    "vinyl-file": "^1.2.1"
   },
   "author": "yo_waka",
   "license": "MIT"

@@ -17,6 +17,8 @@ gulp.task('release', () => {
     .pipe(gulp.dest('lib'))
 });
 
+gulp.task('default', ['build']);
+
 gulp.task('watch', ['build'], () => {
   gulp.watch('./src/**/*.js', ['build'])
     .on('change', (e) => {
