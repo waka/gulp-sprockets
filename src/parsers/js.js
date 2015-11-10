@@ -5,21 +5,11 @@
 import escodegen from 'escodegen';
 import esprima from 'esprima';
 
-// export for test
 export default class Js {
   /**
-   * @param {String} code .
-   * @return {Js} Instance.
+   * @return {Void} .
    */
-  static parse(code) {
-    return new Js(code);
-  }
-
-  /**
-   * @param {String} code .
-   * @constructor
-   */
-  constructor(code) {
+  parse(code) {
     this._ast = esprima.parse(code, {comment: true});
   }
 
@@ -31,9 +21,11 @@ export default class Js {
   }
 
   /**
-   * @return {Object} Esprima AST Node.
+   * @return {Array.<String>} Comment texts.
    */
   get comments() {
-    return this._ast.comments;
+    return this._ast.comments.map(function(comment) {
+      return comment.value;
+    });
   }
 }

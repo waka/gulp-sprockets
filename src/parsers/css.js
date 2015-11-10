@@ -4,21 +4,12 @@
 
 import postcss from 'postcss';
 
-// export for test
 export default class Css {
   /**
    * @param {String} code .
-   * @return {Css} Instance.
+   * @return {Void} .
    */
-  static parse(code) {
-    return new Css(code);
-  }
-
-  /**
-   * @param {String} code .
-   * @constructor
-   */
-  constructor(code) {
+  parse(code) {
     this._ast = postcss.parse(code);
   }
 
@@ -26,18 +17,20 @@ export default class Css {
    * @return {String} Generated CSS string.
    */
   code() {
-    this._ast.removeChild(this.comment);
+    this._ast.walkComments((comment) => {
+      this._ast.removeChild(comment);
+    });
     return this._ast.toString();
   }
 
   /**
-   * @return {Node} PostCSS AST Node.
+   * @return {Array.<String>} Comment text.
    */
-  get comment() {
+  get comments() {
     let res = [];
     this._ast.walkComments(function(comment) {
-      res.push(comment);
+      res.push(comment.text);
     });
-    return res[0];
+    return res;
   }
 }
