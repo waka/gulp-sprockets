@@ -55,6 +55,7 @@ export default class Base extends Transformer {
    */
   getRequires() {
     let requires = [];
+    let includes = [];
     let stubs = [];
 
     this.parser.comments.forEach((comment) => {
@@ -67,6 +68,9 @@ export default class Base extends Transformer {
             requires.push.apply(
                 requires, this.requireTreeDirective(obj.path));
             break;
+          case 'include':
+            includes.push(this.includeDirective(obj.path));
+            break;
           case 'stub':
             stubs.push(this.stubDirective(obj.path));
             break;
@@ -74,9 +78,9 @@ export default class Base extends Transformer {
       });
     });
 
-    return requires.filter(function(req) {
+    return _.unique(requires.filter(function(req) {
       return 0 > stubs.indexOf(req);
-    });
+    }));
   }
 
   /**
@@ -118,6 +122,14 @@ export default class Base extends Transformer {
    * @return {String} Asset path.
    */
   stubDirective(p) {
+    return this.getAsset(p);
+  }
+
+  /**
+   * @param {String} p File path.
+   * @return {String} Asset path.
+   */
+  includeDirective(p) {
     return this.getAsset(p);
   }
 

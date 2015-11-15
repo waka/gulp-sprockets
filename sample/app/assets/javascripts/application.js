@@ -1,4 +1,5 @@
 //= require ./common
+//= stub ./pages/page3
 //= require_tree ./pages
 
 window.onload = function() {
