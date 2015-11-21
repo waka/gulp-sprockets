@@ -1,4 +1,5 @@
+/lib
 node_modules
 npm-debug.log
-sample/public/assets/*
+/sample/public/assets/*
 .DS_Store
