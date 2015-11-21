@@ -1,8 +1,6 @@
 /**
- * @fileoverview Transform vinyl.
+ * @fileoverview Transform vinyl file.
  */
-
-import _ from 'lodash';
 
 export class Transformer {
   /**
