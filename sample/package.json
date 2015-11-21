@@ -2,23 +2,27 @@
   "name": "gulp-sprockets-sample",
   "version": "0.1.0",
   "description": "gulp-sprockets sample implementation.",
-  "repository": "git://github.com/waka/gulp-sprockets",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/waka/gulp-sprockets.git"
+  },
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch"
   },
+  "author": "yo_waka",
+  "license": "MIT",
   "devDependencies": {
-    "babel-core": "^5.4.7",
-    "del": "^2.0.2",
+    "babel-core": "^6.2.1",
+    "babel-preset-es2015": "^6.1.18",
+    "del": "^2.1.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.0",
+    "gulp-babel": "^6.1.0",
     "gulp-cached": "^1.1.0",
     "gulp-if": "^2.0.0",
-    "gulp-load-plugins": "^0.10.0",
-    "gulp-uglify": "^1.0.1",
-    "gulp-sass": "^2.0.4",
-    "run-sequence": "^1.1.4"
-  },
-  "author": "yo_waka",
-  "license": "MIT"
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-sass": "^2.1.0",
+    "run-sequence": "^1.1.5"
+  }
 }
