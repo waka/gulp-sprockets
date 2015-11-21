@@ -4,7 +4,7 @@
 $ npm install
 $ npm run build
 
-# see build files
+# See build files
 $ ls public/assets
 ```
 
@@ -12,4 +12,7 @@ $ ls public/assets
 
 ```
 $ NODE_ENV=production npm run build
+
+# See build files
+$ ls public/assets
 ```
