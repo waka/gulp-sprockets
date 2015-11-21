@@ -19,8 +19,10 @@ export default function (options) {
   options = assign(defaultOptions(), options);
 
   return stream.through(function(vFile) {
-    vFile = transformation(
-        [builder, directive], vFile, options);
+    if (!vFile.isNull()) {
+      vFile = transformation(
+          [builder, directive], vFile, options);
+    }
     this.emit('data', vFile);
   });
 }

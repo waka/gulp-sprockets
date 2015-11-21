@@ -1,6 +1,9 @@
-# gulp-sprockets
+# gulp-sprockets [![Build Status](https://travis-ci.org/waka/gulp-sprockets.svg?branch=master)](https://travis-ci.org/waka/gulp-sprockets)
 
-Sprockets for nodejs.
+
+Sprockets for nodejs.  
+It be able to run the build process only in Node.js.  
+You may not hit the command `rake assets:precompile`.
 
 ## Installation
 
@@ -10,7 +13,7 @@ npm install gulp-sprockets
 
 ## Usage
 
-Gulpfile
+gulpfile.babel.js
 
 ```
 import gulp from 'gulp';
@@ -18,37 +21,42 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import runSequence from 'run-sequence';
 
 const $ = gulpLoadPlugins({ lazy: false });
-const destPath = "./public/assets"
+const assetsPath = "./app/assets";
+const destPath = "./public/assets";
+const release = process.env.NODE_ENV === 'release'
 
-// initialize manifest!
-$.sprockets.declare(destPath);
+// initialize sprockets!
+$.sprockets.declare([assetsPath], destPath);
+
+
+/**
+ * Sprockets way
+ */
 
 gulp.task('build:image', () => {
-  return gulp.src(['app/assets/images/**/*.png'])
-    .pipe($.sprockets.image())
+  return gulp.src([assetsPath + '/images/**/*.png'])
+    .pipe($.if(release, $.sprockets.precompile()))
     .pipe(gulp.dest(destPath))
 });
 
 gulp.task('build:js', () => {
-  return gulp.src('app/assets/javascripts/*.js')
+  return gulp.src([assetsPath + '/javascripts/*.js'])
     .pipe($.sprockets.js())
-    .pipe($.babel())
+    .pipe($.if(release, $.sprockets.precompile()))
     .pipe(gulp.dest(destPath))
 });
 
 gulp.task('build:css', () => {
-  return gulp.src('app/assets/stylesheets/*.scss')
+  return gulp.src([assetsPath + '/stylesheets/*.css'])
     .pipe($.cached('css'))
-    .pipe($.sprockets.sass())
+    .pipe($.sprockets.css({precompile: release}))
+    .pipe($.if(release, $.sprockets.precompile()))
     .pipe(gulp.dest(destpath))
 });
 
 gulp.task('default', () => {
-  runSequence(
-      'clean',
-      'build:image',
-      ['build:css', 'build:js']
-  );
+  // image task must be processed before others
+  runSequence('build:image', ['build:css', 'build:js']);
 })
 
 ```
@@ -69,7 +77,3 @@ And then do build command.
 ```
 $ npm run build
 ```
-
-## Todo
-
-- recognize sprockets directives, and translate

@@ -15,7 +15,7 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
-    "test": "mocha --require babel-core/register"
+    "test": "mocha --require babel-core/register --recursive"
   },
   "author": "yo_waka",
   "license": "MIT",

@@ -59,7 +59,7 @@ export class Assets {
   /**
    * @return {Array.<String>} .
    */
-  get imagesPaths() {
+  get imagePaths() {
     return this._imagePaths;
   }
 
@@ -95,7 +95,7 @@ export class Assets {
    * @return {String} Asset path.
    */
   findImage(filePath, isFullPath = false) {
-    const extnames = ['.jpg', '.png', '.gif'];
+    const extnames = ['.jpg', 'jpeg', '.png'];
     return this._find(
         filePath,
         isFullPath ? null : this._imagePaths,
