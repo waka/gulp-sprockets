@@ -43,10 +43,22 @@ export class Css extends Base {
    * @override
    */
   transform(vFile, options) {
-    this.parser.parse(vFile.contents.toString());
-    const code = this.generateCode(this.getRequires(), options);
-    vFile.contents = new Buffer(code);
+    try {
+      this.parser.parse(vFile.contents.toString());
+      const code = this.generateCode(this.getRequires(), options);
+      vFile.contents = new Buffer(code);
+    } catch (err) {
+      console.log("Error: " + vFile.path);
+      throw err;
+    }
     return vFile;
+  }
+
+  /**
+   * @override
+   */
+  newInstance() {
+    return new Css();
   }
 }
 

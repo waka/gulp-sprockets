@@ -7,7 +7,12 @@ describe('Assets', () => {
     const assets = new Assets();
 
     before(() => {
-      assets.init(['app/assets', 'front']);
+      assets.init({
+        app: 'app/assets',
+        javascripts: ['front/javascripts'],
+        stylesheets: ['front/stylesheets'],
+        images: ['front/images']
+      });
     });
 
     describe('#javascriptPaths', () => {
@@ -33,7 +38,7 @@ describe('Assets', () => {
     const assets = new Assets();
 
     before(() => {
-      assets.init(['./test-assets']);
+      assets.init({ app: './test-assets' });
     });
 
     describe('existence javascript file', () => {
@@ -79,7 +84,7 @@ describe('Assets', () => {
     const assets = new Assets();
 
     before(() => {
-      assets.init(['./test-assets']);
+      assets.init({ app: './test-assets' });
     });
 
     describe('existence css file', () => {

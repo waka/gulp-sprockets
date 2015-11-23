@@ -8,7 +8,7 @@ import manifest   from './manifest';
 let sprockets = { css, js, precompile, scss };
 
 /**
- * @param {Array.<String>} assetPaths .
+ * @param {Object} assetPaths .
  * @param {String} manifestPath .
  */
 sprockets.declare = function(assetPaths, manifestPath) {

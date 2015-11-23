@@ -2,37 +2,56 @@
  * @fileoverview Assets configurations.
  */
 
-import _    from "lodash";
-import fs   from 'fs';
-import path from 'path';
+import _      from "lodash";
+import assign from 'object-assign';
+import fs     from 'fs';
+import path   from 'path';
+
+function defaultAssetPaths() {
+  return {
+    app: null,
+    javascripts: [],
+    stylesheets: [],
+    images: []
+  };
+}
 
 export class Assets {
   constructor() {
-    this._assetPaths = [];
+    this._assetPath = null;
     this._javascriptPaths = [];
     this._stylesheetPaths = [];
     this._imagePaths = [];
   }
 
   /**
-   * @param {Array.<String>} assetPaths .
+   * @param {Object} assetPaths .
    */
   init(assetPaths) {
-    this._assetPaths = assetPaths.map(function(p) {
-      return path.resolve(p);
-    });
+    assetPaths = assign(defaultAssetPaths(), assetPaths);
 
-    this._javascriptPaths = this._assetPaths.map(function(p) {
-      return path.join(p, 'javascripts');
-    });
+    this._assetPath = path.resolve(assetPaths.app);
 
-    this._stylesheetPaths = this._assetPaths.map(function(p) {
-      return path.join(p, 'stylesheets');
-    });
+    this._javascriptPaths = _.flatten([
+      path.join(this._assetPath, 'javascripts'),
+      assetPaths.javascripts.map(function(p) {
+        return path.resolve(p);
+      })
+    ]);
 
-    this._imagePaths = this._assetPaths.map(function(p) {
-      return path.join(p, 'stylesheets');
-    });
+    this._stylesheetPaths = _.flatten([
+      path.join(this._assetPath, 'stylesheets'),
+      assetPaths.stylesheets.map(function(p) {
+        return path.resolve(p);
+      })
+    ]);
+
+    this._imagePaths = _.flatten([
+      path.join(this._assetPath, 'images'),
+      assetPaths.images.map(function(p) {
+        return path.resolve(p);
+      })
+    ]);
   }
 
   /**
@@ -69,7 +88,7 @@ export class Assets {
    * @return {String} Asset path.
    */
   findJavaScript(filePath, isFullPath = false) {
-    const extnames = ['.js', '.coffee'];
+    const extnames = ['.js', '.js.coffee', '.coffee'];
     return this._find(
         filePath,
         isFullPath ? null : this._javascriptPaths,
@@ -82,7 +101,7 @@ export class Assets {
    * @return {String} Asset path.
    */
   findStyleSheet(filePath, isFullPath = false) {
-    const extnames = ['.css', '.scss', '.sass'];
+    const extnames = ['.css', '.css.scss', '.scss', '.sass'];
     return this._find(
         filePath,
         isFullPath ? null : this._stylesheetPaths,
@@ -107,7 +126,7 @@ export class Assets {
    */
   _find(filePath, assetPaths, extnames) {
     if (!filePath) {
-      throw Error(filePath + ' is not defined');
+      throw Error('file path is not defined');
     }
 
     let res = null;
@@ -126,7 +145,7 @@ export class Assets {
     }
 
     if (!res) {
-      throw Error(filePath + ' is not found');
+      throw Error(filePath + ' is not found in ' + (assetPaths || []).join(','));
     }
     return res;
   }

@@ -5,6 +5,7 @@
 import _    from "lodash";
 import path from 'path';
 import dir  from '../common/directory';
+import fs   from 'fs';
 import File from '../common/file';
 import { Transformer } from '../transformer';
 
@@ -14,6 +15,14 @@ export default class Base extends Transformer {
    */
   transform(vFile, options) {
     return vFile;
+  }
+
+  /**
+   * @abstract
+   * @return {Object} New directive instance.
+   */
+  newInstance() {
+    throw Error('must be implemented');
   }
 
   /**
@@ -90,8 +99,8 @@ export default class Base extends Transformer {
    */
   generateCode(requires, options) {
     const buf = requires.map((req) => {
-      const res = this.builder.transform(File.createVinyl(req), options);
-      return res.contents.toString();
+      const vFile = this.newInstance().transform(File.createVinyl(req), options);
+      return vFile.contents.toString();
     });
     return buf.join('\n') + '\n' + this.parser.code();
   }
@@ -111,9 +120,13 @@ export default class Base extends Transformer {
   requireTreeDirective(p) {
     return _.flatten(this.assetPaths.map((assetPath) => {
       const dirPath = path.join(assetPath, p);
-      return dir.list(dirPath, true).map((p2) => {
-        return this.getAsset(p2, true);
-      });
+      if (fs.existsSync(dirPath)) {
+        return dir.list(dirPath, true).map((p2) => {
+          return this.getAsset(p2, true);
+        });
+      } else {
+        return [];
+      }
     }));
   }
 

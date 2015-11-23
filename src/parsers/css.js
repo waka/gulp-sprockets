@@ -2,7 +2,7 @@
  * @fileoverview CSS parser.
  */
 
-import postcss from 'postcss';
+import postcss from 'postcss-scss';
 
 export default class Css {
   /**
@@ -18,7 +18,11 @@ export default class Css {
    */
   code() {
     this._ast.walkComments((comment) => {
-      this._ast.removeChild(comment);
+      try {
+        this._ast.removeChild(comment);
+      } catch (e) {
+        // nothing to do.
+      }
     });
     return this._ast.toString();
   }

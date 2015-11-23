@@ -5,6 +5,7 @@
 import compiler from 'node-sass';
 import path from 'path';
 import File from '../common/file';
+import assets from '../assets';
 import manifest from '../manifest';
 import { Transformer } from '../transformer';
 
@@ -46,7 +47,8 @@ export class Scss extends Transformer {
       functions: {
         "asset-path($url)": func,
         "image-url($url)": func
-      }
+      },
+      includePaths: assets.stylesheetPaths.concat([path.dirname(vFile.path)])
     });
     vFile.contents = new Buffer(compiled.css.toString());
     return vFile;

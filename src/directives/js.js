@@ -2,6 +2,7 @@
  * @fileoverview JavaScript directive handler.
  */
 
+import path    from 'path';
 import assets  from '../assets';
 import builder from '../builders/js';
 import Parser  from '../parsers/js';
@@ -43,10 +44,26 @@ export class Js extends Base {
    * @override
    */
   transform(vFile, options) {
-    this.parser.parse(vFile.contents.toString());
-    const code = this.generateCode(this.getRequires(), options);
-    vFile.contents = new Buffer(code);
+    if (path.extname(vFile.path) === '.coffee') {
+      return this.builder.transform(vFile, options);
+    }
+
+    try {
+      this.parser.parse(vFile.contents.toString());
+      const code = this.generateCode(this.getRequires(), options);
+      vFile.contents = new Buffer(code);
+    } catch (err) {
+      console.log("Error: " + vFile.path);
+      throw err;
+    }
     return vFile;
+  }
+
+  /**
+   * @override
+   */
+  newInstance() {
+    return new Js();
   }
 }
 
