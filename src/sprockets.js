@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import css        from './streams/css';
 import js         from './streams/js';
 import precompile from './streams/precompile';

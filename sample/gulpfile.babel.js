@@ -5,12 +5,17 @@ import del from 'del';
 import runSequence from 'run-sequence';
 
 const $ = gulpLoadPlugins({ lazy: false });
-const assetsPath = "./app/assets"
+const assetsPaths = {
+  app: "./app/assets",
+  javascripts: [],
+  stylesheets: [],
+  images: []
+};
 const destPath = "./public/assets"
 const release = process.env.NODE_ENV === 'release'
 
 // initialize sprockets!
-sprockets.declare([assetsPath], destPath);
+sprockets.declare(assetsPaths, destPath);
 
 
 /**
@@ -18,13 +23,13 @@ sprockets.declare([assetsPath], destPath);
  */
 
 gulp.task('build:image', () => {
-  return gulp.src([assetsPath + '/images/**/*.png', assetsPath + '/images/**/*.jpg'])
+  return gulp.src([assetsPaths.app + '/images/**/*.png', assetsPaths.app + '/images/**/*.jpg'])
     .pipe($.if(release, sprockets.precompile()))
     .pipe(gulp.dest(destPath))
 });
 
 gulp.task('build:css', () => {
-  return gulp.src([assetsPath + '/stylesheets/*.css'])
+  return gulp.src([assetsPaths.app + '/stylesheets/*.css'])
     .pipe($.cached('css'))
     .pipe(sprockets.css({precompile: release}))
     .pipe($.if(release, sprockets.precompile()))
@@ -32,7 +37,7 @@ gulp.task('build:css', () => {
 });
 
 gulp.task('build:js', () => {
-  return gulp.src([assetsPath + '/javascripts/*.js'])
+  return gulp.src([assetsPaths.app + '/javascripts/*.js'])
     .pipe(sprockets.js())
     .pipe($.if(release, sprockets.precompile()))
     .pipe(gulp.dest(destPath))
@@ -44,7 +49,7 @@ gulp.task('build:js', () => {
  */
 
 gulp.task('build:es6', () => {
-  return gulp.src([assetsPath + '/javascripts/roots/*.js'])
+  return gulp.src([assetsPaths.app + '/javascripts/roots/*.js'])
     .pipe($.babel())
     .pipe($.if(release, sprockets.precompile()))
     .pipe(gulp.dest(destPath))
@@ -56,7 +61,7 @@ gulp.task('build:es6', () => {
  */
 
 gulp.task('build:scss', () => {
-  return gulp.src([assetsPath + '/stylesheets/roots/*.scss'])
+  return gulp.src([assetsPaths.app + '/stylesheets/roots/*.scss'])
     .pipe($.cached('scss'))
     .pipe(sprockets.scss({precompile: release}))
     .pipe($.if(release, sprockets.precompile()))
@@ -80,11 +85,11 @@ gulp.task('default', () => {
 });
 
 gulp.task('watch', ['default'], () => {
-  gulp.watch([assetsPath + '/javascripts/**/*.coffee'], ['build:js'])
+  gulp.watch([assetsPaths.app + '/javascripts/**/*.coffee'], ['build:js'])
     .on('change', (e) => {
       console.log(`File ${e.path} was ${e.type}, running build task...`);
     });
-  gulp.watch([assetsPath + '/stylesheets/**/*.(css|scss|sass)'], ['build:css'])
+  gulp.watch([assetsPaths.app + '/stylesheets/**/*.(css|scss|sass)'], ['build:css'])
     .on('change', (e) => {
       console.log(`File ${e.path} was ${e.type}, running build task...`);
     });

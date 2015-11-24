@@ -131,7 +131,7 @@ export class Assets {
 
     let res = null;
 
-    if (assetPaths) {
+    if (assetPaths && assetPaths.length) {
       res = _.unique(_.flatten(assetPaths.map((p) => {
         return extnames.map((extname) => {
           return this._autoExtname(path.join(p, filePath), extname);
