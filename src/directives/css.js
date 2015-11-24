@@ -2,6 +2,7 @@
  * @fileoverview CSS directive handler.
  */
 
+import path    from 'path';
 import assets  from '../assets';
 import builder from '../builders/scss';
 import Parser  from '../parsers/css';
@@ -43,6 +44,10 @@ export class Css extends Base {
    * @override
    */
   transform(vFile, options) {
+    if (path.extname(vFile.path) === '.scss' || path.extname(vFile.path) === '.sass') {
+      return this.builder.transform(vFile, options);
+    }
+
     try {
       this.parser.parse(vFile.contents.toString());
       const code = this.generateCode(this.getRequires(), options);

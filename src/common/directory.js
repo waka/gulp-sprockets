@@ -16,7 +16,8 @@ const directory = {
       if (stat.isFile()) {
         paths.push(fullPath);
       } else if (recursively && stat.isDirectory()) {
-        paths.concat(directory.list(fullPath, recursively));
+        paths.push.apply(
+            paths, directory.list(fullPath, recursively));
       }
     });
 
