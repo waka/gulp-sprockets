@@ -1,7 +1,7 @@
 {
   "name": "gulp-sprockets",
   "description": "gulp-sprockets is a sprockets implemented by NodeJS, provide parsing directives in assets, precompiling assets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/waka/gulp-sprockets",
   "repository": {
     "type": "git",
