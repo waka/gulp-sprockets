@@ -1,6 +1,6 @@
 {
   "name": "gulp-sprockets",
-  "description": "another sprockets by nodejs",
+  "description": "gulp-sprockets is a sprockets implemented by NodeJS, provide parsing directives in assets, precompiling assets",
   "version": "0.1.0",
   "homepage": "https://github.com/waka/gulp-sprockets",
   "repository": {
@@ -17,7 +17,12 @@
     "watch": "gulp watch",
     "test": "mocha --require babel-core/register --recursive"
   },
-  "author": "yo_waka",
+  "keyword": [
+    "gulp",
+    "rails",
+    "sprockets"
+  ],
+  "author": "Yoshimasa Wakahara <y.wakahara@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/waka/gulp-sprockets/issues"
