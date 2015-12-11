@@ -63,7 +63,7 @@ gulp.task('build:css', () => {
     .pipe($.cached('css'))
     .pipe($.sprockets.css({precompile: release}))
     .pipe($.if(release, $.sprockets.precompile()))
-    .pipe(gulp.dest(destpath))
+    .pipe(gulp.dest(destPath))
 });
 
 gulp.task('default', () => {
