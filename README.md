@@ -1,16 +1,16 @@
 # gulp-sprockets [![Build Status](https://travis-ci.org/waka/gulp-sprockets.svg?branch=master)](https://travis-ci.org/waka/gulp-sprockets)
 
 
-gulp-sprockets is NodeJS implementation of [Sprockets](https://github.com/sstephenson/sprockets). 
-It be able to build and precompile assets of Rails with only in Node.js, without Rails.  
-gulp-sprockets interprets Sprockets directives, to concat asset files.  
-And you may not already hit the command `rake assets:precompile`.
+gulp-sprockets is a NodeJS implementation of [Sprockets](https://github.com/sstephenson/sprockets). 
+It is able to build and precompile assets of Rails apps solely with Node.js, without Rails.  
+gulp-sprockets interprets Sprockets directives to concatenate asset files.  
+And you no longer need to hit the command `rake assets:precompile`.
 
 ## Provided gulp streams
 
-- `sprockets.css` provide things of asset pipeline for CSS/SCSS/Sass.
-- `sprockets.js` provide things of asset pipeline for JavaScript/CoffeeScript.
-- `sprockets.precompile` provide things of asset precompiling.
+- `sprockets.css` provides things of asset pipeline for CSS/SCSS/Sass.
+- `sprockets.js` provides things of asset pipeline for JavaScript/CoffeeScript.
+- `sprockets.precompile` provides things of asset precompiling.
 
 ## Installation
 
