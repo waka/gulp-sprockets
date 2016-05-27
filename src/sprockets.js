@@ -17,4 +17,4 @@ sprockets.declare = function(assetPaths, manifestPath) {
   manifest.init(manifestPath);
 };
 
-export default sprockets;
+module.exports = sprockets;
